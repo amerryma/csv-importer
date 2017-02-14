@@ -10,9 +10,10 @@ const server = http.createServer(app)
 mongoose.connect(mongo.uri)
 
 setImmediate(() => {
-  server.listen(port, ip, () => {
-    console.log('Express server listening on http://%s:%d, in %s mode', ip, port, env)
-  })
+  // server.listen(port, ip, () => {
+  //   console.log('Express server listening on http://%s:%d, in %s mode', ip, port, env)
+  // })
+  server.listen(port)
 })
 
 export default app
