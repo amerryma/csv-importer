@@ -1,5 +1,6 @@
 import express from 'express'
-import forceSSL from 'express-force-ssl'
+import fileUpload from 'express-fileupload'
+// import forceSSL from 'express-force-ssl'
 import cors from 'cors'
 import compression from 'compression'
 import morgan from 'morgan'
@@ -27,8 +28,10 @@ export default (routes) => {
     app.use(morgan('dev'))
   }
 
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
+  app.use(bodyParser.json({ type: 'application/*+json' }))
+  app.use(bodyParser.text({ type: 'text/csv' }))
+
+  app.use(fileUpload())
   app.use(routes)
   app.use(queryErrorHandler())
   app.use(bodyErrorHandler())

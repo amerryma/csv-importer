@@ -1,6 +1,37 @@
 import _ from 'lodash'
 import { success, notFound } from '../../services/response/'
 import { Album } from '.'
+import csv from 'csvtojson'
+import {TextDecoder} from "text-encoding/lib/encoding";
+
+export const createFromFile = function ({files: {file}}, res, next) {
+  let items = []
+
+  if (file.mimetype === 'text/csv') {
+    let string = new TextDecoder("utf-8").decode(file.data)
+
+    csv()
+      .fromString(string)
+      .on('json', (jsonObj, rowIndex)=>{
+        if (rowIndex > 0) {
+          items.push(jsonObj);
+        }
+      })
+      .on('error',(err)=>{
+        console.log(err)
+      })
+      .on('done', ()=>{
+        Album.create(items)
+        .then(items =>{
+          let list = []
+          items.forEach(album => list.push(album.view(true)));
+          return list
+        })
+        .then(success(res, 201))
+        .catch(next)
+      })
+  }
+}
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Album.create(body)

@@ -10,7 +10,7 @@
     "test:integration": "npm test \"src/**/index.test.js\"",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "dev": "nodemon -i \"*.test.js\" .",
+    "dev": "nodemon %NODE_DEBUG_OPTION% -i \"*.test.js\" .",
     "prod": "cross-env NODE_ENV=production nodemon -i \"*.test.js\" -r dotenv-safe/config .",
     "lint": "eslint src",
     "docs": "apidoc -i src -o docs && apidoc-markdown -p docs -o DOCS.md",
@@ -51,14 +51,19 @@
     "bodymen": "^1.0.1",
     "compression": "^1.6.2",
     "cors": "^2.7.1",
+    "csvtojson": "^1.1.4",
     "express": "^4.13.4",
+    "express-fileupload": "0.0.7",
     "express-force-ssl": "^0.3.2",
     "lodash": "^4.13.1",
     "mongoose": "^4.4.19",
     "mongoose-create-unique": "^0.4.1",
     "mongoose-keywords": "^0.3.1",
     "morgan": "^1.7.0",
+    "multer": "^1.3.0",
     "querymen": "^2.0.0",
     "request": "^2.74.0",
-    "request-promise": "^4.1.1"  }
+    "request-promise": "^4.1.1",
+    "text-encoding": "^0.6.4"
+  }
 }
