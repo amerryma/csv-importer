@@ -3,7 +3,6 @@ import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { createFromFile, create, index, show, update, destroy } from './controller'
 import { schema } from './model'
-// import csvtojson from 'csvtojson'
 const multer = require('multer');
 
 export Album, { schema } from './model'
@@ -12,31 +11,6 @@ const router = new Router()
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage})
 const { name, year, artist } = schema.tree
-
-let contentTypeAwareHandler = function () {
-  return [function (req, res, next) {
-    // Do stuff with files
-
-    if (req.header('Content-Type') !== 'application/json') {
-      return upload.single('file').apply(this, arguments)
-    } else {
-      return body({name, year, artist}).apply(this, arguments)
-    }
-  }, function (req, res, next) {
-    // Do stuff with files
-
-    if (req.header('Content-Type') !== 'application/json') {
-      return createFromFile
-    } else {
-      return create
-    }
-  }]
-}
-
-
-router.post('/',
-  upload.single('file'),
-  createFromFile)
 
 /**
  * @api {post} /albums Create album
@@ -49,9 +23,9 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Album not found.
  */
-// router.post('/',
-//   serializer(body({ name, year, artist })),
-//   create)
+router.post('/',
+  upload.single('file'),
+  createFromFile)
 
 /**
  * @api {get} /albums Retrieve albums

@@ -84,6 +84,10 @@ This project uses a few libraries as a scaffolding of the REST application.
 * express-fileupload - This allows for a file to be registered in the `req` portion of the pipeline.
 * csvtojson - This small library allows for the parsing of the file as a string into json objects.
 
+# Notable Files
+
+* src/api/album/controller.js
+
 # To Do's
 
 * Make single page application cosume api
